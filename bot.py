@@ -76,7 +76,7 @@ class TelegramBot:
 
     @staticmethod
     def getData(url, session):
-
+        
         try:
             req = session.get(url)
             if req.ok:
@@ -95,7 +95,7 @@ class TelegramBot:
             try:
                 amountStake = float(
                     TelegramBot.getData(BASE_URL_EXPLORER + mixnode['idkey'], s).json()['total_delegation']['amount'])
-            except KeyError as e:
+            except (KeyError,AttributeError) as e:
                 print(e)
                 amountStake = 0.0
 
@@ -108,7 +108,7 @@ class TelegramBot:
             try:
                 stake = TelegramBot.getData(BASE_URL_MIXNODE + mixnode['idkey'] + BASE_URL_STAKE, s).json()[
                     'saturation']
-            except KeyError as e:
+            except (KeyError,AttributeError) as e:
                 print(e)
                 stake = 0.0
 
@@ -116,7 +116,7 @@ class TelegramBot:
                 apy = \
                 list(filter(lambda x: x["identityKey"] == mixnode['idkey'], TelegramBot.getData(NG_APY, s).json()))[0][
                     'apy']
-            except KeyError as e:
+            except (KeyError,AttributeError) as e:
                 print(e)
                 apy = 0.0
 
