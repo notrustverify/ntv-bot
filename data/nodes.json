@@ -1,16 +1,23 @@
 {
 "mixnodes": [
   {
+    "idkey": "B63yxdf92RdjwEeUFouxU4x5gRpWXKorT51px8EbpQvJ",
+    "mix_id": "274",
+    "name": "No Trust Verify 3",
+    "accept_delegation": false
+  },
+  {
     "idkey": "4yRfauFzZnejJhG2FACTVQ7UnYEcFUYw3HzXrmuwLMaR",
     "mix_id": "97",
     "name": "No Trust Verify 2",
-    "accept_delegation": true
+    "accept_delegation": false
   },
   {
     "idkey": "APxUbCmGp4K9qDzvwVADJFNu8S3JV1AJBw7q6bS5KN9E",
     "mix_id": "255",
     "name": "No Trust Verify 1",
-    "accept_delegation": false
+    "accept_delegation": true
   }
   ]
 }
+
