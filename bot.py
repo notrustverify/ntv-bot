@@ -13,9 +13,9 @@ from telegram.ext.messagehandler import MessageHandler
 from telegram.update import Update
 from utils import Utils
 
-BASE_URL_MIXNODE = "https://validator.nymtech.net/api/v1/status/mixnode/"
+BASE_URL_MIXNODE = "https://validator.nymtech.net/api/v1/status/mixnode"
 BASE_URL_EXPLORER = "https://explorer.nymtech.net/api/v1/mix-node/"
-BASE_URL_STAKE = "/stake-saturation"
+BASE_URL_STAKE = "stake-saturation"
 NG_APY = "https://mixnet.api.explorers.guru/api/mixnodes"
 
 STATE_INACTIVE = "🟥"
@@ -79,10 +79,12 @@ class TelegramBot:
         
         try:
             req = session.get(url)
+            print(req.content)
             if req.ok:
                 return req
         except requests.exceptions.RequestException as e:
             print(e)
+            print(req.content)
             return 0.0
 
     @staticmethod
@@ -93,24 +95,20 @@ class TelegramBot:
 
         for mixnode in mixnodes['mixnodes']:
             try:
-                amountStake = float(
-                    TelegramBot.getData(BASE_URL_EXPLORER + mixnode['idkey'], s).json()['total_delegation']['amount'])
+                dataMixnodeExplorer = TelegramBot.getData(f"{BASE_URL_EXPLORER}/{mixnode['mix_id']}", s).json()
+                amountStake = float(dataMixnodeExplorer['total_delegation']['amount'])
+                stake = dataMixnodeExplorer['stake_saturation']
             except (KeyError,AttributeError) as e:
                 print(e)
+                stake = 0.0
                 amountStake = 0.0
 
             try:
                 amountStake /= UNYM
             except ZeroDivisionError as e:
                 print(e)
-                amountStake = 0.0
-
-            try:
-                stake = TelegramBot.getData(BASE_URL_MIXNODE + mixnode['idkey'] + BASE_URL_STAKE, s).json()[
-                    'saturation']
-            except (KeyError,AttributeError) as e:
-                print(e)
                 stake = 0.0
+                amountStake = 0.0
 
             try:
                 apy = \
@@ -125,7 +123,7 @@ class TelegramBot:
 
             if stake > 0.0:
                 msg += f"\nStake saturation: {stake * 100:.2f}% ({Utils.humanFormat(amountStake, 2)} NYM)"
-                msg += f"\n**Delegations accepted: {STATE_INACTIVE if stake > 0.99 else STATE_ACTIVE}**"
+                msg += f"\n**Delegations accepted: {STATE_INACTIVE if stake > 0.99 or not(mixnode['accept_delegation']) else STATE_ACTIVE}**"
 
             if apy > 0.0:
                 msg += f"\nAPY: {apy * 100:.2f}%"

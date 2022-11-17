@@ -2,11 +2,15 @@
 "mixnodes": [
   {
     "idkey": "4yRfauFzZnejJhG2FACTVQ7UnYEcFUYw3HzXrmuwLMaR",
-    "name": "No Trust Verify 2"
+    "mix_id": "97",
+    "name": "No Trust Verify 2",
+    "accept_delegation": true
   },
   {
     "idkey": "APxUbCmGp4K9qDzvwVADJFNu8S3JV1AJBw7q6bS5KN9E",
-    "name": "No Trust Verify 1"
+    "mix_id": "255",
+    "name": "No Trust Verify 1",
+    "accept_delegation": false
   }
   ]
 }
