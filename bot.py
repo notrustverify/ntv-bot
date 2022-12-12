@@ -114,8 +114,8 @@ class TelegramBot:
                 apy = \
                 list(filter(lambda x: x["identityKey"] == mixnode['idkey'], TelegramBot.getData(NG_APY, s).json()))[0][
                     'apy']
-            except (KeyError,AttributeError) as e:
-                print(e)
+            except (KeyError,AttributeError, IndexError) as e:
+                print(f"Error get node data {e}")
                 apy = 0.0
 
             msg += f"\n{mixnode['name']}"
