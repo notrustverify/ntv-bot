@@ -42,10 +42,10 @@ class TelegramBot:
         self.updater.dispatcher.add_handler(CommandHandler('mixnodes', self.getMixnodes))
         self.updater.dispatcher.add_handler(CommandHandler('m', self.getMixnodes))
         self.updater.dispatcher.add_handler(MessageHandler(Filters.text, self.unknown))
-        self.updater.dispatcher.add_handler(MessageHandler(Filters.command, self.unknown))
+        #self.updater.dispatcher.add_handler(MessageHandler(Filters.command, self.unknown))
 
         # Filters out unknown messages.
-        self.updater.dispatcher.add_handler(MessageHandler(Filters.text, self.unknown_text))
+        #self.updater.dispatcher.add_handler(MessageHandler(Filters.text, self.unknown_text))
 
         print(f"Start {__name__}")
 
