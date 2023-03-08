@@ -17,6 +17,30 @@
     "mix_id": "774",
     "name": "No Trust Verify 3",
     "accept_delegation": true
+  },
+   {
+    "idkey": "U2j5tDnhHy25h2T2iRxqytM9opNuah3YchegbSSJ2AS",
+    "mix_id": "787",
+    "name": "No Trust Verify 4",
+    "accept_delegation": true
+  },
+   {
+    "idkey": "A6k1q6EPptrGEFnziKkma2pP5r2JW2yp6C7voCWWc1kn",
+    "mix_id": "786",
+    "name": "No Trust Verify 5",
+    "accept_delegation": true
+  },
+   {
+    "idkey": "EmRTJLSsszJZ6yy1otjphnbxjfDQecdH6dLKZdpwc9zW",
+    "mix_id": "785",
+    "name": "No Trust Verify 6",
+    "accept_delegation": true
+  },
+   {
+    "idkey": "FT5EP4BNcgbQEspc9MLxZibArguJkpKnXWDUgQJUdkUN",
+    "mix_id": "788",
+    "name": "No Trust Verify 7",
+    "accept_delegation": true
   }
   ]
 }
