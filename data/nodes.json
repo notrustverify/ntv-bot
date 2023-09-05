@@ -42,6 +42,38 @@
 			"mix_id": "788",
 			"name": "No Trust Verify 7",
 			"accept_delegation": true
+		},
+		{
+			"idkey": "4MDHUtBvWazJRBgYbjrpNCydVaCXJmHLxPDWJq8EpdAx",
+			"mix_id": "990",
+			"name": "No Trust Verify 8",
+			"accept_delegation": true
+		},
+		{
+			"idkey": "Fj3yUr5CWhEE38pgay6SuVGiKyUnPQ9H8NSEp9FuoLTJ",
+			"mix_id": "991",
+			"name": "No Trust Verify 9",
+			"accept_delegation": true
+		},
+		{
+			"idkey": "FuNfLcB7Cak5Qc1AthKP21FPHLLF1uTbVjvvo4oeRKE2",
+			"mix_id": "1034",
+			"name": "No Trust Verify 10",
+			"accept_delegation": true
+		},
+		{
+			"idkey": "HvQwkRsFsE4oY5AjVskbGHYyg4YgvEp3sV5oQ9Kjv27M",
+			"mix_id": "1035",
+			"name": "No Trust Verify 11",
+			"accept_delegation": true
+		},
+		{
+			"idkey": "5qQgQzMHBE6b2E4hU8uePaoie6xBnsxN3JxujHYXCuUD",
+			"mix_id": "1036",
+			"name": "No Trust Verify 12",
+			"accept_delegation": true
 		}
+		
+		
 	]
 }
