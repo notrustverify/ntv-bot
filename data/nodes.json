@@ -72,6 +72,12 @@
 			"mix_id": "1036",
 			"name": "No Trust Verify 12",
 			"accept_delegation": true
+		},
+		{
+			"idkey": "6P6hShyfbki1CTUDb5QzoXkqsHDP95mf3b5dJNCKBfio",
+			"mix_id": "1156",
+			"name": "No Trust Verify 14",
+			"accept_delegation": true
 		}
 		
 		
