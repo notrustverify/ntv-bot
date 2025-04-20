@@ -128,7 +128,7 @@ class TelegramBot:
             if apy > 0.0:
                 msg += f"\nAPY: {apy * 100:.2f}%"
 
-            msg += f"\n[Explorer](https://explorer.nymtech.net/network-components/mixnode/{mixnode['mix_id']})\n"
+            msg += f"\n[Explorer](https://nym.com/explorer/nym-node/{mixnode['mix_id']})\n"
 
         return msg
 
