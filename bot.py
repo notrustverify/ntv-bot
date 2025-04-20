@@ -17,6 +17,8 @@ BASE_URL_MIXNODE = "https://validator.nymtech.net/api/v1/status/mixnode"
 BASE_URL_EXPLORER = "https://explorer.nymtech.net/api/v1/mix-node/"
 BASE_URL_STAKE = "stake-saturation"
 NG_APY = "https://mixnet.api.explorers.guru/api/mixnodes"
+BASE_URL_DELEGATIONS = "https://api.nym.spectredao.net/api/v1/nodes"
+BASE_URL_NETWORK_PARAMS = "https://api.nym.spectredao.net/api/v1/network-parameters"
 
 STATE_INACTIVE = "🟥"
 STATE_STANDBY = "🟦"
@@ -79,7 +81,6 @@ class TelegramBot:
         
         try:
             req = session.get(url)
-            print(req.content)
             if req.ok:
                 return req
         except requests.exceptions.RequestException as e:
@@ -93,11 +94,24 @@ class TelegramBot:
 
         s = requests.session()
 
+        try:
+            network_params = TelegramBot.getData(BASE_URL_NETWORK_PARAMS, s).json()
+        except (KeyError,AttributeError) as e:
+            print(e)
+            network_params = {}
+
         for mixnode in mixnodes['mixnodes']:
             try:
-                dataMixnodeExplorer = TelegramBot.getData(f"{BASE_URL_EXPLORER}/{mixnode['mix_id']}", s).json()
-                amountStake = float(dataMixnodeExplorer['total_delegation']['amount'])
-                stake = dataMixnodeExplorer['stake_saturation']
+                # Get network parameters for stake saturation point
+                stake_saturation_point = float(network_params['interval']['stake_saturation_point'])
+                
+                # Get delegations from new API
+                delegations = TelegramBot.getData(f"{BASE_URL_DELEGATIONS}/{mixnode['mix_id']}/delegations", s).json()
+                # Sum up all delegations
+                amountStake = sum(float(d['amount']['amount']) for d in delegations)
+                
+                # Calculate stake saturation percentage
+                stake = amountStake / stake_saturation_point if stake_saturation_point > 0 else 0.0
             except (KeyError,AttributeError) as e:
                 print(e)
                 stake = 0.0
@@ -110,14 +124,6 @@ class TelegramBot:
                 stake = 0.0
                 amountStake = 0.0
 
-            try:
-                apy = \
-                list(filter(lambda x: x["identityKey"] == mixnode['idkey'], TelegramBot.getData(NG_APY, s).json()))[0][
-                    'apy']
-            except (KeyError,AttributeError, IndexError) as e:
-                print(f"Error get node data {e}")
-                apy = 0.0
-
             msg += f"\n{mixnode['name']}"
             msg += f"\nIdentity Key: `{mixnode['idkey']}`"
 
@@ -125,15 +131,11 @@ class TelegramBot:
                 msg += f"\nStake saturation: {stake * 100:.2f}% ({Utils.humanFormat(amountStake, 2)} NYM)"
                 msg += f"\n**Delegations accepted: {STATE_INACTIVE if stake > 0.99 or not(mixnode['accept_delegation']) else STATE_ACTIVE}**"
 
-            if apy > 0.0:
-                msg += f"\nAPY: {apy * 100:.2f}%"
-
             msg += f"\n[Explorer](https://nym.com/explorer/nym-node/{mixnode['mix_id']})\n"
 
         return msg
 
     def start(self, update: Update, context: CallbackContext):
-        username = update.message.from_user.username
         update.message.reply_text(
             f"Hello!\n[No Trust Verify](https://nym.notrustverify.ch) mixnodes are\n\n{TelegramBot.formatMixnodes(self.mixnodes)}\nVisit [nym.notrustverify.ch](https://nym.notrustverify.ch) or join us on [Telegram](https://t.me/notrustverify)",
             parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
